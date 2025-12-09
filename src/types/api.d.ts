@@ -1,0 +1,66 @@
+import type { IDashboardStats, IPlan, ITelecaller, ITransaction, ITransactionDetails, IUser, IUserDetails } from "./general";
+
+interface IListBase {
+  total: number;
+  totalPages: number;
+};
+
+interface IUsersResponse extends IListBase {
+  users: IUser[];
+};
+
+export interface IUserDetailsResponse {
+  success: boolean;
+  data: IUserDetails | null;
+};
+
+interface ITransactionsResponse extends IListBase {
+  transactions: ITransaction[];
+};
+
+export interface ITelecallersResponse extends IListBase {
+  telecallers: ITelecaller[];
+};
+
+export interface ITelecallerDetailsResponse {
+  success: boolean;
+  data: ITelecaller | null;
+};
+
+export interface IReportsResponse extends IListBase {
+  reports: IReport[];
+};
+
+export interface IDashboardStatsResponse {
+  success: boolean;
+  data: IDashboardStats;
+};
+
+export interface ITransactionDetailsResponse {
+  success: boolean;
+  data: ITransactionDetails | null;
+};
+
+export interface IPlansResponse {
+  success: boolean
+  plans: IPlan[]
+  total: number
+  totalPages: number
+};
+
+export interface ICreatePlanResponse {
+  success: boolean
+  message: string
+  data: IPlan
+};
+
+export interface IUpdatePlanResponse {
+  success: boolean
+  message: string
+  data: IPlan
+};
+
+export interface IDeletePlanResponse {
+  success: boolean
+  message: string
+};
