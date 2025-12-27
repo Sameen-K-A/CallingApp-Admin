@@ -50,7 +50,7 @@ export function DashboardMetrics({ stats, isLoading }: DashboardMetricsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       {/* Revenue Card */}
-      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent">
+      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent shadow-none">
         <CardHeader>
           <CardDescription>Total Revenue</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums text-primary @[250px]/card:text-3xl">
@@ -75,14 +75,14 @@ export function DashboardMetrics({ stats, isLoading }: DashboardMetricsProps) {
       </Card>
 
       {/* Users Card */}
-      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent">
+      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent shadow-none">
         <CardHeader>
           <CardDescription>Total Users</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums text-primary @[250px]/card:text-3xl">
             {stats ? stats.users.total.toLocaleString('en-IN') : 0}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-400 dark:border-green-800">
+            <Badge variant="success" className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-400 dark:border-green-800">
               <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse mr-1" />
               {onlineUsers} - Online
             </Badge>
@@ -106,7 +106,7 @@ export function DashboardMetrics({ stats, isLoading }: DashboardMetricsProps) {
       </Card>
 
       {/* Telecallers Card */}
-      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent">
+      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent shadow-none">
         <CardHeader>
           <CardDescription>Total Telecallers</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums text-primary @[250px]/card:text-3xl">
@@ -141,7 +141,7 @@ export function DashboardMetrics({ stats, isLoading }: DashboardMetricsProps) {
       </Card>
 
       {/* Calls Card */}
-      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent">
+      <Card className="@container/card bg-linear-to-t from-muted/70 to-transparent shadow-none">
         <CardHeader>
           <CardDescription>Total Calls</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums text-primary @[250px]/card:text-3xl">

@@ -6,9 +6,11 @@ import apiClient from '@/lib/axios';
 import { ROUTE } from '@/routes/router';
 import useErrorHandler from '@/hooks/useErrorHandler';
 import { Loader2 } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const { handleError } = useErrorHandler();
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +66,7 @@ export default function LoginPage() {
                   <GoogleLogin
                     onSuccess={handleGoogleSuccess}
                     onError={handleGoogleError}
-                    theme="outline"
+                    theme={theme === "dark" ? "outline" : "filled_black"}
                     shape="pill"
                     useOneTap={false}
                   />

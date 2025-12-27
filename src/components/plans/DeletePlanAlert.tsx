@@ -64,7 +64,7 @@ export const DeletePlanAlert = ({ plan, open, onClose, onSuccess }: DeletePlanAl
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deletePlan.isPending}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            className="bg-destructive text-white hover:bg-destructive/90"
           >
             <Trash />
             Yes, Delete

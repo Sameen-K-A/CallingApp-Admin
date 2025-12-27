@@ -16,7 +16,7 @@ export function NavMain({ sidebarData }: NavMainProps) {
         <SidebarMenu>
           {sidebarData.map((item) => {
             const isActive = location.pathname.startsWith(item.url);
-            const buttonClasses = `w-full cursor-pointer transition-colors px-3 duration-200 ${isActive ? 'bg-gradient-to-r from-primary to-[#c7a019] text-white' : 'hover:bg-secondary'} `;
+            const buttonClasses = `w-full cursor-pointer px-3 transition-colors duration-200 ${isActive ? 'bg-gradient-to-r from-primary to-primary/80 text-white' : 'hover:bg-secondary'}`;
 
             return (
               <SidebarMenuItem key={item.title}>

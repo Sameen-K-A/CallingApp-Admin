@@ -68,7 +68,7 @@ export const ViewPlanDialog = ({ plan, open, onClose, onEdit, onDelete }: ViewPl
 
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
 
-              <div className="relative overflow-hidden rounded-lg border bg-card p-3 sm:p-4 hover:shadow-md transition-shadow">
+              <div className="relative overflow-hidden rounded-lg border bg-card p-3 sm:p-4">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1 min-w-0 flex-1">
                     <p className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wide truncate">
@@ -84,7 +84,7 @@ export const ViewPlanDialog = ({ plan, open, onClose, onEdit, onDelete }: ViewPl
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-lg border bg-card p-3 sm:p-4 hover:shadow-md transition-shadow">
+              <div className="relative overflow-hidden rounded-lg border bg-card p-3 sm:p-4">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1 min-w-0 flex-1">
                     <p className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wide truncate">
