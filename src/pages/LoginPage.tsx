@@ -6,7 +6,8 @@ import apiClient from '@/lib/axios';
 import { ROUTE } from '@/routes/router';
 import useErrorHandler from '@/hooks/useErrorHandler';
 import { Loader2 } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/hooks/useTheme';
+import { getErrorMessage } from '@/utils/helper';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -31,8 +32,8 @@ export default function LoginPage() {
       } else {
         throw new Error("Login failed. Please try again.");
       }
-    } catch (error: any) {
-      handleError(error, 'Login failed. Please check if you are an authorized admin.');
+    } catch (error) {
+      handleError(getErrorMessage(error), 'Login failed. Please check if you are an authorized admin.');
     } finally {
       setIsLoading(false);
     }

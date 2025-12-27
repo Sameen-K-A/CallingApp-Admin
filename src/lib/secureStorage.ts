@@ -6,7 +6,7 @@ if (!SECRET_KEY) {
   console.warn('VITE_STORAGE_SECRET_KEY is not defined. Using default key.');
 };
 
-export const setEncryptedItem = (key: string, value: any): void => {
+export const setEncryptedItem = <T>(key: string, value: T): void => {
   try {
     const stringValue = JSON.stringify(value);
     const encryptedValue = CryptoJS.AES.encrypt(stringValue, SECRET_KEY).toString();

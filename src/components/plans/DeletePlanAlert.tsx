@@ -1,6 +1,7 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useDeletePlan } from "@/hooks/useApi";
 import type { IPlan } from "@/types/general";
+import { getErrorMessage } from "@/utils/helper";
 import { Loader2, Trash } from "lucide-react";
 import { toast } from "sonner";
 
@@ -23,8 +24,8 @@ export const DeletePlanAlert = ({ plan, open, onClose, onSuccess }: DeletePlanAl
 
       onClose();
       onSuccess?.();
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to delete plan.");
+    } catch (error) {
+      toast.error(getErrorMessage(error) || "Failed to delete plan.");
     }
   };
 

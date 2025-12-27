@@ -9,6 +9,7 @@ import { useCreatePlan } from "@/hooks/useApi";
 import { Loader2, X, IndianRupee, Percent, Info } from "lucide-react";
 import { FaCoins } from "react-icons/fa";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/helper";
 
 interface CreatePlanDialogProps {
   open: boolean;
@@ -31,8 +32,8 @@ export const CreatePlanDialog = ({ open, onClose }: CreatePlanDialogProps) => {
       toast.success(response.message || "Plan created successfully.");
       reset();
       onClose();
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to create plan.");
+    } catch (error) {
+      toast.error(getErrorMessage(error) || "Failed to create plan.");
     }
   };
 

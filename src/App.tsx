@@ -4,7 +4,7 @@ import { Toaster } from "./components/ui/sonner";
 import AppRoutes from "./routes/AppRouter";
 import { connectSocket, disconnectSocket } from "./lib/socket";
 import { useAuth } from "./context/AuthContext";
-import { useTheme } from "./context/ThemeContext";
+import { useTheme } from '@/hooks/useTheme';
 
 function App() {
   const { isAuthenticated } = useAuth();

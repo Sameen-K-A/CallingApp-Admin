@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editPlanSchema, type EditPlanInput } from "@/schemas/plan.schema";
 import { useUpdatePlan } from "@/hooks/useApi";
@@ -13,6 +13,7 @@ import { Loader2, X, IndianRupee, Percent, Info, FilePenLine } from "lucide-reac
 import { FaCoins } from "react-icons/fa";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/helper";
 
 interface EditPlanDialogProps {
   plan: IPlan | null;
@@ -23,11 +24,14 @@ interface EditPlanDialogProps {
 export const EditPlanDialog = ({ plan, open, onClose }: EditPlanDialogProps) => {
   const updatePlan = useUpdatePlan();
 
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm<EditPlanInput>({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, control } = useForm<EditPlanInput>({
     resolver: zodResolver(editPlanSchema),
   });
 
-  const isActive = watch("isActive");
+  const isActive = useWatch({
+    control,
+    name: "isActive",
+  });
 
   useEffect(() => {
     if (plan) {
@@ -59,8 +63,8 @@ export const EditPlanDialog = ({ plan, open, onClose }: EditPlanDialogProps) => 
       toast.success(response.message || "Plan updated successfully.");
       reset();
       onClose();
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to update plan.");
+    } catch (error) {
+      toast.error(getErrorMessage(error) || "Failed to update plan.");
     }
   };
 
