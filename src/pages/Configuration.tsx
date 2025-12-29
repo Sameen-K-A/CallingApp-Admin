@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Wallet, Video, Phone, Save, Loader2, RotateCcw, Settings } from 'lucide-react';
+import { MdCurrencyExchange } from "react-icons/md";
 import { Button } from '@/components/ui/button';
 import { ConfigCard } from '@/components/configuration/ConfigCard';
 import { ConfigField } from '@/components/configuration/ConfigField';
@@ -132,7 +133,18 @@ const Configuration = () => {
           value={formData.inrToCoinRatio}
           onChange={(value) => handleFieldChange('inrToCoinRatio', value)}
           disabled={updateConfig.isPending}
-        />
+        >
+          {formData.inrToCoinRatio && (
+            <div className="flex items-center gap-2 mt-2 p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+              <div className="flex items-center justify-center h-6 w-6 rounded-full bg-primary/20">
+                <MdCurrencyExchange className="h-3.5 w-3.5" />
+              </div>
+              <p className="text-sm font-medium">
+                1 INR <span className="text-muted-foreground mx-1">=</span> {formData.inrToCoinRatio} Coins
+              </p>
+            </div>
+          )}
+        </ConfigField>
         <ConfigField
           id="minWithdrawalCoins"
           field={config.withdrawal.minWithdrawalCoins}

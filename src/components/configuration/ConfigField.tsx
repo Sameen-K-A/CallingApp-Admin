@@ -8,9 +8,10 @@ interface ConfigFieldProps {
   value: number | undefined;
   onChange: (value: number | undefined) => void;
   disabled?: boolean;
+  children?: React.ReactNode;
 }
 
-export const ConfigField = ({ id, field, value, onChange, disabled }: ConfigFieldProps) => {
+export const ConfigField = ({ id, field, value, onChange, disabled, children }: ConfigFieldProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     if (val === '') {
@@ -39,6 +40,7 @@ export const ConfigField = ({ id, field, value, onChange, disabled }: ConfigFiel
       <p className="text-xs text-muted-foreground leading-relaxed">
         {field.description}
       </p>
+      {children}
     </div>
   );
 };
