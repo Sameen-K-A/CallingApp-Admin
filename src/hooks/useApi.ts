@@ -18,7 +18,8 @@ import type {
   IUpdateConfigResponse,
   ICompleteWithdrawalPayload,
   ICompleteWithdrawalResponse,
-  IRejectWithdrawalResponse
+  IRejectWithdrawalResponse,
+  IUserDistributionResponse
 } from '@/types/api';
 import type { ITelecaller, ITransaction } from '@/types/general';
 
@@ -255,6 +256,25 @@ export const useDashboardStats = () => {
       throw new Error('Failed to fetch dashboard statistics');
     },
     staleTime: 10 * 60 * 1000,
+  });
+};
+
+export type UserDistributionPeriod = 'today' | 'last7days' | 'last30days' | 'all';
+
+export const useUserDistribution = (period: UserDistributionPeriod) => {
+  return useQuery({
+    queryKey: ['userDistribution', period],
+    queryFn: async () => {
+      const { data } = await apiClient.get<IUserDistributionResponse>('/admin/dashboard/user-distribution', {
+        params: { period },
+      });
+
+      if (data.success && data.data) {
+        return data.data;
+      }
+      throw new Error('Failed to fetch user distribution');
+    },
+    staleTime: 5 * 60 * 1000,
   });
 };
 

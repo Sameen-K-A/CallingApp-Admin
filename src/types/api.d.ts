@@ -141,3 +141,16 @@ export interface IRejectWithdrawalResponse {
     processedAt: string;
   };
 }
+
+// ============================================
+// User Distribution Types
+// ============================================
+export interface IUserDistributionData {
+  users: number;
+  telecallers: number;
+}
+
+export interface IUserDistributionResponse {
+  success: boolean;
+  data: IUserDistributionData;
+}

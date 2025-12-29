@@ -1,4 +1,5 @@
 import { DashboardMetrics } from '@/components/dashboard/DashboardMetrics';
+import { UserDistributionChart } from '@/components/dashboard/UserDistributionChart';
 import { useDashboardStats } from '@/hooks/useApi';
 import useErrorHandler from '@/hooks/useErrorHandler';
 
@@ -23,6 +24,12 @@ export default function Dashboard() {
         stats={stats || null}
         isLoading={isStatsLoading}
       />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-6">
+        <div className="col-span-1 md:col-span-2 lg:col-span-3">
+          <UserDistributionChart />
+        </div>
+      </div>
     </div>
   );
 };
