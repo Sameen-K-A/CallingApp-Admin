@@ -38,7 +38,7 @@ export function AppSidebar({ sidebarData, ...props }: AppSidebarProps) {
         <SidebarMenu>
           <AlertDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen}>
             <AlertDialogTrigger asChild>
-              <SidebarMenuButton className='cursor-pointer hover:bg-destructive hover:text-white font-semibold duration-300 transition-colors rounded-2xl px-3'>
+              <SidebarMenuButton className='cursor-pointer hover:bg-destructive hover:text-white text-muted-foreground font-semibold duration-300 transition-colors rounded-2xl px-3'>
                 <LogOut />
                 Logout
               </SidebarMenuButton>
