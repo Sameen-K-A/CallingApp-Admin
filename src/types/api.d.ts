@@ -64,3 +64,50 @@ export interface IDeletePlanResponse {
   success: boolean
   message: string
 };
+
+// ============================================
+// Configuration Types
+// ============================================
+
+export interface IConfigField {
+  value: number;
+  label: string;
+  description: string;
+}
+
+export interface IConfigData {
+  withdrawal: {
+    inrToCoinRatio: IConfigField;
+    minWithdrawalCoins: IConfigField;
+  };
+  videoCall: {
+    userCoinPerSec: IConfigField;
+    telecallerCoinPerSec: IConfigField;
+  };
+  audioCall: {
+    userCoinPerSec: IConfigField;
+    telecallerCoinPerSec: IConfigField;
+  };
+  updatedAt: string;
+}
+
+export interface IConfigResponse {
+  success: boolean;
+  message: string;
+  data: IConfigData;
+}
+
+export interface IUpdateConfigPayload {
+  inrToCoinRatio?: number;
+  minWithdrawalCoins?: number;
+  userVideoCallCoinPerSec?: number;
+  userAudioCallCoinPerSec?: number;
+  telecallerVideoCallCoinPerSec?: number;
+  telecallerAudioCallCoinPerSec?: number;
+}
+
+export interface IUpdateConfigResponse {
+  success: boolean;
+  message: string;
+  data: IConfigData;
+}

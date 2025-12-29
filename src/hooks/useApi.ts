@@ -12,7 +12,10 @@ import type {
   IPlansResponse,
   ICreatePlanResponse,
   IUpdatePlanResponse,
-  IDeletePlanResponse
+  IDeletePlanResponse,
+  IConfigResponse,
+  IUpdateConfigPayload,
+  IUpdateConfigResponse
 } from '@/types/api';
 import type { ITelecaller, ITransaction } from '@/types/general';
 
@@ -269,6 +272,39 @@ export const useDeletePlan = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['plans'] });
+    },
+  });
+};
+
+// ============================================
+// Configuration API Hooks
+// ============================================
+
+export const useConfig = () => {
+  return useQuery({
+    queryKey: ['config'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<IConfigResponse>('/admin/config');
+
+      if (data.success && data.data) {
+        return data.data;
+      }
+      throw new Error('Failed to fetch configuration.');
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+};
+
+export const useUpdateConfig = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (configData: IUpdateConfigPayload) => {
+      const { data } = await apiClient.put<IUpdateConfigResponse>('/admin/config', configData);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['config'] });
     },
   });
 };

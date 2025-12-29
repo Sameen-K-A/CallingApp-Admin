@@ -13,4 +13,5 @@ export const ROUTE = {
    PLANS: "/plans",
    REPORTS: "/reports",
    REPORT_DETAILS: "/reports/:id",
+   CONFIGURATION: "/configuration"
 };

@@ -16,6 +16,7 @@ import Transactions from "@/pages/Transactions";
 import TransactionDetails from "@/pages/TransactionDetails";
 import Reports from "@/pages/Reports";
 import ReportDetails from "@/pages/ReportDetails";
+import Configuration from "@/pages/Configuration";
 import NotfoundPage from "@/pages/NotFound";
 
 //Protecters
@@ -42,6 +43,7 @@ export default function AppRoutes() {
           <Route path={ROUTE.TRANSACTION_DETAILS} element={<TransactionDetails />} />
           <Route path={ROUTE.REPORTS} element={<Reports />} />
           <Route path={ROUTE.REPORT_DETAILS} element={<ReportDetails />} />
+          <Route path={ROUTE.CONFIGURATION} element={<Configuration />} />
         </Route>
       </Route>
 

@@ -5,6 +5,7 @@ import { ROUTE } from "@/routes/router";
 import type { IsidebarItems } from "@/types/general";
 import { MdPayments, MdPeopleAlt, MdSpaceDashboard, MdWarning } from "react-icons/md";
 import { FaCoins } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -47,6 +48,12 @@ export default function AdminLayout() {
       url: ROUTE.REPORTS,
       icon: MdWarning,
       onClick: () => navigate(ROUTE.REPORTS),
+    },
+    {
+      title: "Configuration",
+      url: ROUTE.CONFIGURATION,
+      icon: IoMdSettings,
+      onClick: () => navigate(ROUTE.CONFIGURATION),
     },
   ];
 
