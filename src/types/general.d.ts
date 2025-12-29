@@ -88,29 +88,31 @@ export interface ITransaction {
   createdAt: string;
 }
 
-export interface ITransactionDetails extends Pick<ITransaction,
-  | "_id"
-  | "type"
-  | "amount"
-  | "status"
-  | "createdAt"
-> {
-  user: Pick<IUser,
-    | "_id"
-    | "name"
-    | "phone"
-  > & {
+export interface ITransactionDetails {
+  _id: string;
+  type: 'RECHARGE' | 'WITHDRAWAL';
+  amount: number;
+  status: 'PENDING' | 'SUCCESS' | 'FAILED' | 'CANCELLED' | 'REJECTED';
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    _id: string;
+    name: string;
+    phone: string;
     walletBalance: number;
   };
-
-  // RECHARGE fields
+  // For RECHARGE
   coins?: number;
   gatewayOrderId?: string;
   gatewayPaymentId?: string;
-
-  // WITHDRAWAL fields
-  payoutId?: string;
-  utr?: string;
+  // For WITHDRAWAL
+  bankDetails?: {
+    accountNumber: string;
+    ifscCode: string;
+    accountHolderName: string;
+  };
+  transferReference?: string;
+  processedAt?: string;
 }
 
 export interface IReport {

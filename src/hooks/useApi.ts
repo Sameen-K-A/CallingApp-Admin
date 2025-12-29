@@ -15,7 +15,10 @@ import type {
   IDeletePlanResponse,
   IConfigResponse,
   IUpdateConfigPayload,
-  IUpdateConfigResponse
+  IUpdateConfigResponse,
+  ICompleteWithdrawalPayload,
+  ICompleteWithdrawalResponse,
+  IRejectWithdrawalResponse
 } from '@/types/api';
 import type { ITelecaller, ITransaction } from '@/types/general';
 
@@ -96,6 +99,47 @@ export const useTransactionDetails = (transactionId: string | undefined) => {
     },
     enabled: !!transactionId, // Only fetch if transactionId exists
     staleTime: 3 * 60 * 1000,
+  });
+};
+
+// ============================================
+// Withdrawal Management Hooks
+// ============================================
+
+export const useCompleteWithdrawal = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ transactionId, payload }: { transactionId: string; payload: ICompleteWithdrawalPayload }) => {
+      const { data } = await apiClient.post<ICompleteWithdrawalResponse>(
+        `/admin/withdrawals/${transactionId}/complete`,
+        payload
+      );
+      return data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['transaction', variables.transactionId] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    },
+  });
+};
+
+export const useRejectWithdrawal = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (transactionId: string) => {
+      const { data } = await apiClient.post<IRejectWithdrawalResponse>(
+        `/admin/withdrawals/${transactionId}/reject`
+      );
+      return data;
+    },
+    onSuccess: (_, transactionId) => {
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['transaction', transactionId] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+    },
   });
 };
 

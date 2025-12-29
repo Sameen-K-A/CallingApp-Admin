@@ -111,3 +111,33 @@ export interface IUpdateConfigResponse {
   message: string;
   data: IConfigData;
 }
+
+// ============================================
+// Withdrawal Types
+// ============================================
+export interface ICompleteWithdrawalPayload {
+  transferReference: string;
+}
+
+export interface ICompleteWithdrawalResponse {
+  success: boolean;
+  message: string;
+  data: {
+    _id: string;
+    status: 'SUCCESS';
+    transferReference: string;
+    processedAt: string;
+    coinsDeducted: number;
+    newBalance: number;
+  };
+}
+
+export interface IRejectWithdrawalResponse {
+  success: boolean;
+  message: string;
+  data: {
+    _id: string;
+    status: 'REJECTED';
+    processedAt: string;
+  };
+}

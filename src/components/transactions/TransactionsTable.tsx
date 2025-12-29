@@ -27,6 +27,7 @@ export const TransactionsTable = ({ transactions, currentPage, limit }: Transact
         return 'warning';
       case 'FAILED':
       case 'CANCELLED':
+      case 'REJECTED':
         return 'destructive';
       default:
         return 'secondary';
