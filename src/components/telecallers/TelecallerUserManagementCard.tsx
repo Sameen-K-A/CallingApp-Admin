@@ -119,7 +119,7 @@ export const TelecallerUserManagementCard = ({ telecaller }: TelecallerUserManag
               <div className="flex items-center justify-between gap-4">
                 <span className="text-sm font-medium text-muted-foreground">Wallet Balance</span>
                 <span className="text-sm font-medium text-foreground font-mono">
-                  ₹{telecaller.walletBalance.toFixed(2)}
+                  {telecaller.walletBalance} coins
                 </span>
               </div>
 

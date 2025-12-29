@@ -57,7 +57,7 @@ export function TelecallerInfoCard({ telecaller }: TelecallerInfoCardProps) {
             </Badge>
           } />
           <DetailItem label="Wallet Balance" value={
-            <span className="font-mono">₹{telecaller.walletBalance.toFixed(2)}</span>
+            <span className="font-mono">{telecaller.walletBalance} coins</span>
           } />
           <DetailItem label="Joined" value={`${formatDistanceToNow(new Date(telecaller.createdAt))} ago`} />
         </dl>
@@ -69,7 +69,7 @@ export function TelecallerInfoCard({ telecaller }: TelecallerInfoCardProps) {
           </p>
         </div>
 
-        {status === 'REJECTED' && telecaller.telecallerProfile.verificationNotes && (
+        {telecaller.telecallerProfile.verificationNotes && (
           <>
             <Separator />
             <div>
