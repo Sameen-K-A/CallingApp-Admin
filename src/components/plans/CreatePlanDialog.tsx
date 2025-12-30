@@ -2,12 +2,15 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPlanSchema, type CreatePlanInput } from "@/schemas/plan.schema";
 import { useCreatePlan } from "@/hooks/useApi";
-import { Loader2, X, IndianRupee, Percent, Info } from "lucide-react";
+import { Loader2, X, IndianRupee, Percent, Calculator, TrendingDown } from "lucide-react";
 import { FaCoins } from "react-icons/fa";
+import { useMemo } from "react";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/helper";
 
@@ -19,12 +22,25 @@ interface CreatePlanDialogProps {
 export const CreatePlanDialog = ({ open, onClose }: CreatePlanDialogProps) => {
   const createPlan = useCreatePlan();
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreatePlanInput>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<CreatePlanInput>({
     resolver: zodResolver(createPlanSchema),
     defaultValues: {
       discountPercentage: 0,
     },
   });
+
+  const watchedAmount = useWatch({ control, name: "amount" });
+  const watchedDiscount = useWatch({ control, name: "discountPercentage" });
+  const watchedCoins = useWatch({ control, name: "coins" });
+
+  const calculatedValues = useMemo(() => {
+    const amount = watchedAmount || 0;
+    const discount = watchedDiscount || 0;
+    const coins = watchedCoins || 0;
+    const savings = amount * discount / 100;
+    const finalAmount = amount - savings;
+    return { amount, discount, coins, savings, finalAmount };
+  }, [watchedAmount, watchedDiscount, watchedCoins]);
 
   const onSubmit = async (data: CreatePlanInput) => {
     try {
@@ -114,7 +130,7 @@ export const CreatePlanDialog = ({ open, onClose }: CreatePlanDialogProps) => {
                       id="coins"
                       type="number"
                       placeholder="e.g., 500"
-                      className={`pl-8 h-11 ${errors.coins ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                      className={`pl-10 h-11 ${errors.coins ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                       {...register("coins", { valueAsNumber: true })}
                     />
                     <FaCoins className="absolute left-2.5 top-3 h-5 w-5 text-muted-foreground" />
@@ -159,24 +175,72 @@ export const CreatePlanDialog = ({ open, onClose }: CreatePlanDialogProps) => {
                 )}
               </div>
 
-              <div className="rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 p-4">
-                <div className="flex gap-3">
-                  <Info className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-blue-900 dark:text-blue-100">Plan Guidelines</p>
-                    <ul className="text-xs text-blue-700 dark:text-blue-300 space-y-1 list-disc list-inside">
-                      <li>Amount and coins must be whole numbers (no decimals)</li>
-                      <li>Discount is optional and applies to the amount</li>
-                      <li>New plans are active by default</li>
-                    </ul>
+              {/* Real-time Calculator Preview */}
+              <div className="rounded-xl border-2 border-dashed border-primary/30 bg-gradient-to-br from-primary/5 via-background to-green-500/5 p-4 sm:p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                    <Calculator className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Live Price Calculator</p>
+                    <p className="text-xs text-muted-foreground">Preview of final pricing</p>
                   </div>
                 </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {/* Original Price */}
+                  <div className="rounded-lg bg-background/80 border p-3 text-center">
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide mb-1">Original</p>
+                    <p className="text-base sm:text-lg font-bold text-foreground">
+                      ₹{calculatedValues.amount.toLocaleString()}
+                    </p>
+                  </div>
+
+                  {/* Discount Savings */}
+                  <div className="rounded-lg bg-background/80 border p-3 text-center">
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide mb-1">Savings</p>
+                    <p className="text-base sm:text-lg font-bold text-red-500">
+                      {calculatedValues.savings > 0 ? `-₹${calculatedValues.savings.toLocaleString()}` : "₹0"}
+                    </p>
+                  </div>
+
+                  {/* Coins */}
+                  <div className="rounded-lg bg-background/80 border p-3 text-center">
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide mb-1">Coins</p>
+                    <p className="text-base sm:text-lg font-bold text-amber-600">
+                      {calculatedValues.coins.toLocaleString()}
+                    </p>
+                  </div>
+
+                  {/* Final Amount */}
+                  <div className="rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 p-3 text-center">
+                    <p className="text-[10px] sm:text-xs text-green-700 dark:text-green-400 uppercase tracking-wide mb-1">Final</p>
+                    <p className="text-base sm:text-lg font-bold text-green-600 dark:text-green-400">
+                      ₹{calculatedValues.finalAmount.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+
+                {calculatedValues.discount > 0 && (
+                  <>
+                    <Separator className="my-3" />
+                    <div className="flex items-center justify-center gap-2 flex-wrap">
+                      <TrendingDown className="h-4 w-4 text-green-600" />
+                      <Badge variant="outline" className="bg-green-600 text-white border-green-600 text-xs">
+                        {calculatedValues.discount}% OFF
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        User pays <span className="font-semibold text-green-600">₹{calculatedValues.finalAmount.toLocaleString()}</span> for <span className="font-semibold text-amber-600">{calculatedValues.coins.toLocaleString()}</span> coins
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </form>
         </div>
 
-        <div className="border-t bg-muted/30 p-4 sm:p-6 shrink-0">
+        <div className="border-t bg-muted/30 p-3 sm:p-4 shrink-0">
           <div className="flex items-center justify-end gap-3">
             <Button
               type="button"
