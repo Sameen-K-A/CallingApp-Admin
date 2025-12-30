@@ -49,8 +49,8 @@ export function RechargeWithdrawalChart() {
         ) : (
           <div className="w-full h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="5 5" className="stroke-muted" />
                 <XAxis
                   dataKey="label"
                   tick={{ fontSize: 10 }}
@@ -63,7 +63,7 @@ export function RechargeWithdrawalChart() {
                   tick={{ fontSize: 10 }}
                   tickLine={false}
                   axisLine={false}
-                  tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
+                  tickFormatter={(value) => `₹${value}`}
                   className="text-muted-foreground"
                   width={45}
                 />
@@ -100,13 +100,13 @@ export function RechargeWithdrawalChart() {
                   verticalAlign="bottom"
                   height={36}
                   content={() => (
-                    <div className="flex w-full justify-center gap-6 text-xs mt-5">
+                    <div className="flex w-full justify-center gap-6 text-xs mt-4">
                       <div className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                        <span className="h-2.5 w-2.5 rounded-[2px] bg-green-500" />
                         <span className="text-muted-foreground font-medium">Recharge</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
+                        <span className="h-2.5 w-2.5 rounded-[2px] bg-red-500" />
                         <span className="text-muted-foreground font-medium">Withdrawal</span>
                       </div>
                     </div>
