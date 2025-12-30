@@ -19,7 +19,8 @@ import type {
   ICompleteWithdrawalPayload,
   ICompleteWithdrawalResponse,
   IRejectWithdrawalResponse,
-  IUserDistributionResponse
+  IUserDistributionResponse,
+  IRechargeWithdrawalResponse
 } from '@/types/api';
 import type { ITelecaller, ITransaction } from '@/types/general';
 
@@ -273,6 +274,25 @@ export const useUserDistribution = (period: UserDistributionPeriod) => {
         return data.data;
       }
       throw new Error('Failed to fetch user distribution');
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export type TimePeriod = "last24hours" | "last7days" | "last30days";
+
+export const useRechargeWithdrawalTrends = (period: TimePeriod) => {
+  return useQuery({
+    queryKey: ['rechargeWithdrawalTrends', period],
+    queryFn: async () => {
+      const { data } = await apiClient.get<IRechargeWithdrawalResponse>('/admin/dashboard/recharge-withdrawal-trends', {
+        params: { period },
+      });
+
+      if (data.success && data.data) {
+        return data.data;
+      }
+      throw new Error('Failed to fetch recharge & withdrawal trends');
     },
     staleTime: 5 * 60 * 1000,
   });

@@ -1,4 +1,4 @@
-import type { IDashboardStats, IPlan, ITelecaller, ITransaction, ITransactionDetails, IUser, IUserDetails } from "./general";
+import type { IDashboardStats, IPlan, ITelecaller, ITransaction, ITransactionDetails, IUser, IUserDetails, IRechargeWithdrawalTrend } from "./general";
 
 interface IListBase {
   total: number;
@@ -153,4 +153,12 @@ export interface IUserDistributionData {
 export interface IUserDistributionResponse {
   success: boolean;
   data: IUserDistributionData;
+}
+
+export interface IRechargeWithdrawalResponse {
+  success: boolean;
+  data: {
+    period: string;
+    trends: IRechargeWithdrawalTrend[];
+  };
 }

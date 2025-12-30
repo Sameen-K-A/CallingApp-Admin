@@ -19,7 +19,7 @@ export function UserDistributionChart() {
   ] : [];
 
   return (
-    <Card className="flex flex-col shadow-none">
+    <Card className="flex flex-col shadow-none h-full">
       <CardHeader className="flex items-center justify-between space-y-0">
         <div>
           <CardTitle className="text-base font-semibold">User Distribution</CardTitle>

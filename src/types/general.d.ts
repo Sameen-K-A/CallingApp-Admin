@@ -199,3 +199,9 @@ export interface IPlan {
   createdAt: Date
   updatedAt: Date
 };
+
+export interface IRechargeWithdrawalTrend {
+  label: string;
+  recharge: number;
+  withdrawal: number;
+}
